@@ -1,36 +1,37 @@
 import React, { useState } from "react";
-import axios from "axios"
+import axios from "axios";
 import { Searchbar } from "./components/searchbar";
 import { Top } from "./components/top";
 import { Bottom } from "./components/bottom";
 
 function App() {
+  const [data, setData] = useState({});
+  const [location, setLocation] = useState("");
 
-  const [data, setData] = useState({})
-  const [location, setLocation] = useState('')
-
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=YOUR_KEY`
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=aaec7b1cd06d3acbc9440863929ac9bb`;
 
   const searchLocation = (e) => {
-    if (e.key === 'Enter'){
+    if (e.key === "Enter") {
       fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          setData(data)
-          console.log(data)  
-        })
-        setLocation('')
+        .then((response) => response.json())
+        .then((data) => {
+          setData(data);
+          console.log(data);
+        });
+      setLocation("");
     }
-  }
+  };
   return (
     <div className="app">
-      <Searchbar location={location} setLocation={setLocation} searchLocation={searchLocation}/>
+      <Searchbar
+        location={location}
+        setLocation={setLocation}
+        searchLocation={searchLocation}
+      />
       <div className="container">
-        <Top data={data}/>
+        <Top data={data} />
 
-        {data.name !=undefined && 
-          <Bottom data={data}/>
-        }
+        {data.name != undefined && <Bottom data={data} />}
       </div>
     </div>
   );
